@@ -77,6 +77,31 @@ void borrow_book(int book_quantity) {
     printf("Não foi possível encontrar um livro com o código %d.\n", book_code_query);
 }
 
+void return_book(int book_quantity) {
+    if (book_quantity == 0) {
+        printf("\nAinda não há nenhum livro cadastrado no sistema.\n");
+        return;
+    }
+
+    int book_code_query;
+    printf("\nDigite o código do livro que deseja devolver: ");
+    
+    scanf("%d", &book_code_query);
+    clear_buffer();
+
+    for (int index = 0; index < book_quantity; index++) {
+        if (book[index].book_code == book_code_query) {
+            book[index].book_amount += 1;
+            
+            printf("Devolução realizada com sucesso!\n");
+            printf("Agora há %d exemplar(es) disponível(is) em estoque.\n", book[index].book_amount);
+            return;
+        }
+    }
+    
+    printf("Não foi possível encontrar um livro com o código %d.\n", book_code_query);
+}
+
 int main(int argc, char *argv[]) {
     int book_quantity = 0;
     
@@ -125,7 +150,7 @@ int main(int argc, char *argv[]) {
                 borrow_book(book_quantity);
                 break;
             case 6:
-                //funcao de devolucao
+                return_book(book_quantity);
                 break;
             case 7:
                 printf("\nEncerrando o programa...\n");
