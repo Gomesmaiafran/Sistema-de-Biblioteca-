@@ -40,6 +40,44 @@ void clear_buffer() {
      */
 }
 
+void register_book(int *book_quantity) {
+    book = realloc(book, (*book_quantity + 1) * sizeof(Book));
+    if (book == NULL) {
+        printf("Erro ao alocar memoria.\n");
+        return;
+    }
+
+    Book *new_book = &book[*book_quantity];
+
+    printf("\nDigite o codigo do livro: ");
+    scanf("%d", &new_book->book_code);
+    clear_buffer();
+
+    printf("Digite a quantidade de exemplares: ");
+    scanf("%d", &new_book->book_amount);
+    clear_buffer();
+
+    char buffer[256];
+
+    printf("Digite o nome do autor: ");
+    fgets(buffer, sizeof(buffer), stdin);
+    buffer[strcspn(buffer, "\n")] = '\0'; // remove o \n deixado pelo fgets
+
+    new_book->book_author = malloc(strlen(buffer) + 1);
+    strcpy(new_book->book_author, buffer);
+
+    printf("Digite o titulo do livro: ");
+    fgets(buffer, sizeof(buffer), stdin);
+    buffer[strcspn(buffer, "\n")] = '\0';
+
+    new_book->book_title = malloc(strlen(buffer) + 1);
+    strcpy(new_book->book_title, buffer);
+
+    *book_quantity += 1;
+
+    printf("\nLivro cadastrado com sucesso!\n");
+}
+
 void borrow_book(int book_quantity) {
     if (book_quantity == 0) {
         printf("\nAinda não há nenhum livro cadastrado no sistema.\n");
@@ -135,7 +173,8 @@ int main(int argc, char *argv[]) {
 
         switch (menu) {
             case 1:
-                //funcao de cadastro
+                //funcao de cadastro de livros
+                register_book(&book_quantity);
                 break;
             case 2:
                 //funcao de usuario
@@ -161,6 +200,10 @@ int main(int argc, char *argv[]) {
     } while (menu != 7);
 
 
+    for (int i = 0; i < book_quantity; i++) {
+        free(book[i].book_author);
+        free(book[i].book_title);
+    }
     free(book);
     free(user); //liberacao dos vetores apos fim de uso
  
