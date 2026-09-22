@@ -15,6 +15,8 @@ Ciência e Tecnologia do Estado do Ceará - IFCE.
 [`luancarneiropessoal-tech`](https://github.com/luancarneiropessoal-tech)
 - Roniele -
 [`ronielefhh`](https://github.com/ronielefhh)
+- Francine Gomes -
+[`Gomesmaiafran`](https://github.com/Gomesmaiafran)
 <!--
     Não há nenhuma informação a respeito do nome de
     usuário destes sujeitos aqui no GitHub... Se alguém
