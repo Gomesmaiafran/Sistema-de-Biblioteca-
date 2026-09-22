@@ -139,6 +139,87 @@ void return_book(int book_quantity) {
     
     printf("Não foi possível encontrar um livro com o código %d.\n", book_code_query);
 }
+void search_book(int book_quantity) {
+
+    // Se nao tem livro cadastrado, saida:
+    if (book_quantity == 0) {
+        printf("\nAinda nao ha nenhum livro cadastrado no sistema.\n");
+        return;
+    }
+
+    int opcao;
+    
+    printf("\n===== BUSCAR LIVRO =====\n");
+    printf("[1] Buscar por codigo\n");
+    printf("[2] Buscar por titulo\n");
+    printf("[0] Voltar\n");
+
+    if (scanf("%d", &opcao) != 1) {
+        clear_buffer();
+        return;
+    }
+    clear_buffer();
+
+    int achou = 0;    //vai virar 1 se encontrar algum livro
+    int i;
+
+    //Ponteiro para percorrer o vetor de livros
+    Book *pont = book;
+
+    //buscar por código
+    if (opcao == 1) {
+
+        int codigoLivro;
+        printf("Digite o codigo do livro: ");
+        scanf("%d", &codigoLivro);
+        clear_buffer();
+
+        for (i = 0; i < book_quantity; i++) {
+            if ((pont + i)->book_code == codigoLivro) {
+                printf("\n--- Livro encontrado ---\n");
+                printf("Codigo: %d\n", (pont + i)->book_code);
+                printf("Titulo: %s\n", (pont + i)->book_title);
+                printf("Autor: %s\n", (pont + i)->book_author);
+                printf("Disponiveis: %d\n", (pont + i)->book_amount);
+                achou = 1;
+            }
+        }
+    }
+
+   //buscar por titulo:
+        else if (opcao == 2) {
+
+        char title_query[100];
+        printf("Digite o titulo do livro: ");
+        scanf(" %[^\n]", title_query);
+        clear_buffer();
+
+        for (i = 0; i < book_quantity; i++) {
+            //Da biblioteca <string.h>, strcmp retorna 0 quando as strings sao iguais
+            if (strcmp((pont + i)->book_title, title_query) == 0) {
+                printf("\n--- Livro encontrado ---\n");
+                printf("Codigo: %d\n", (pont + i)->book_code);
+                printf("Titulo: %s\n", (pont + i)->book_title);
+                printf("Autor: %s\n", (pont + i)->book_author);
+                printf("Disponiveis: %d\n", (pont + i)->book_amount);
+                achou = 1;
+            }
+        }
+    }
+    
+    else if (opcao == 0) {
+        return;
+    }
+
+    else {
+        printf("Opcao invalida.\n");
+        return;
+    }
+
+    if (!achou) {
+        printf("\nNenhum livro encontrado.\n");
+    }
+}
 
 int main(int argc, char *argv[]) {
     int book_quantity = 0;
@@ -183,7 +264,7 @@ int main(int argc, char *argv[]) {
                 //funcao de listagem de livros
                 break;
             case 4:
-                //funcao de busca de livro
+                search_book(book_quantity);
                 break;
             case 5:
                 borrow_book(book_quantity);
