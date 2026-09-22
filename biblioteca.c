@@ -1,2 +1,0 @@
-nibuvyb
-qwerttrt
